@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+		<script>
+			//2002-04-30
+			var today = new Date(); //현재날짜
+			var wday = new Date(2023,7,24); //특정날짜
+			var result = today.getTime() - wday.getTime(); // getTime() 1970.1.1 부터의 시간을 ms단위로 확인 가능
+			console.log("오늘 날짜 : "+today.getTime());
+			console.log("예전 날짜 : "+wday.getTime());
+			// result를 일자로 변경 - 1000*60*60*24로 나누면 일자를 알 수 있음
+			var last_day = Math.floor(result/(1000*60*60*24));
+			console.log("현재 차이 : "+last_day);
+			//var last_day1 = Math.floor(last_day/365); //년
+			//var last_day2 = last_day%365; //일
+			
+			alert("2002년 한일월드컵은 "+last_day+"일이 지났습니다.");
+			alert("2002년 한일월드컵은 "+last_day1+"년"+last_day2+"일이 지났습니다.");
+			 
+		</script>
+	</head>
+	<body>
+	
+	</body>
+</html>
