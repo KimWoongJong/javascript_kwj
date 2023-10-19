@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>ajax-비동기방식</title>
+		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+		<style>
+			*{margin:0; padding:0;}
+			section{width:1000px; margin:50px auto 0; text-align: center;}
+			h1{font-size: 40px;}
+			table{width:100%; margin-top:30px; }
+			table,th,td{border:1px solid black; border-collapse: collapse;}
+			th,td{height:60px; font-size:20px;}
+		</style>
+		<script>
+			//stuscore.json 데이터 불러오기
+			$(function(){
+				$("#openBtn").click(function(){
+					var s_url = "source/stuscore.json"; //링크
+					$.ajax({
+						url:s_url, 					//요청할 주소
+						type:"get",					//전송방식 - get, post
+						data:"", 					//전달할 데이터
+						dataType:"json", 			//요청할 데이터타입 - xml,json,html,text
+						success:function(data){ 	//성공시
+							alert("성공");
+							console.log(data);
+							
+							var dhtml = "";
+							for(var i=0;i<data.length;i++){
+								
+								dhtml = dhtml + "<tr>";					
+								dhtml = dhtml + "<td>"+data[i].id+"</td>";					
+								dhtml = dhtml + "<td>"+data[i].first_name+"</td>";					
+								dhtml = dhtml + "<td>"+data[i].kor+"</td>";					
+								dhtml = dhtml + "<td>"+data[i].eng+"</td>";					
+								dhtml = dhtml + "<td>"+data[i].math+"</td>";					
+								dhtml = dhtml + "<td>"+data[i].total+"</td>";					
+								dhtml = dhtml + "<td>"+data[i].avg.toFixed(2)+"</td>";					
+								dhtml = dhtml + "</tr>";					
+							}
+							$("#cont").html(dhtml);
+							
+						},
+						error:function(){
+							alert("실패");
+						}
+						
+					});//ajax
+					
+					$("#cont").text(hdata);
+				})//click
+			});//jquery		
+		</script>
+	</head>
+	<body>
+		<section>
+			<h1>회원정보</h1>
+			<button id="openBtn">데이터 불러오기</button>
+			<table>
+				<colgroup>
+					<col width="8%">
+					<col width="12%">
+					<col width="10%">
+					<col width="10%">
+					<col width="10%">
+					<col width="15%">
+					<col width="35%">
+				</colgroup>
+				<thead>
+					<tr>
+						<th>번호</th>
+						<th>이름</th>
+						<th>국어</th>
+						<th>영어</th>
+						<th>수학</th>
+						<th>합계</th>
+						<th>평균</th>
+					</tr>
+				</thead>
+				<!-- 데이터 추가 -->
+				<tbody id="cont">
+					
+				</tbody>
+			</table>			
+		</section>
+		
+		
+		
+		
+	</body>
+</html>
