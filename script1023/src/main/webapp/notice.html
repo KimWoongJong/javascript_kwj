@@ -6,55 +6,55 @@
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/style.css">
 		<link rel="stylesheet" type="text/css" href="css/notice.css">
-		<style>
-			img{width:50px;}
-		</style>
 		<script>
 			$(function(){
-				var pageNo = $("#pageNo").val();
-				var s_url = "https://apis.data.go.kr/B551011/PhotoGalleryService1/galleryList1?serviceKey=iYgn7arEQ76VnhuI6Qa3VGdFJm%2B01s37aAimKTZGDmnyhUVXavHVoGylSfDCbi0leWxHpMKNYIHn5qSDCX7etw%3D%3D&numOfRows="+ pageNo +"&pageNo=1&MobileOS=ETC&MobileApp=AppTest&arrange=A&_type=xml";
+				var s_url="https://kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieList.xml?key=f5eef3421c602c6cb7ea224104795888";
 				$.ajax({
-					url:s_url, 			 //요청할 주소
-					type:"get",			 //전송방식 - get, post
-					data:"",			 //전달할 데이터
-					dataType:"xml", 	 //요청한 데이터타입 - xml,json,html,text
-					success:function(data){ //성공시
+					url:s_url,
+					type:"get",
+					data:"",
+					dataType:"xml",
+					success:function(data){
 						alert("데이터 성공!!");
 						console.log(data);
-						var sData = $(data).find("item");				
+						var sData = $(data).find("movie");
 						console.log(sData);
 						var hData = "";
 						for(var i=0;i<sData.length;i++){
-							var galContentId = $(sData[i]).find("galContentId").text();
-							var galTitle = $(sData[i]).find("galTitle").text();
-							var galWebImageUrl = $(sData[i]).find("galWebImageUrl").text();
-							var galCreatedTime = $(sData[i]).find("galCreatedTime").text();
-							var galPhotographyLocation = $(sData[i]).find("galPhotographyLocation").text();
-							console.log("1 : "+galContentId);
-							console.log("2 : "+galTitle);
-							console.log("3 : "+galCreatedTime);
-							console.log("4 : "+galPhotographyLocation);
-							console.log("5 : "+galWebImageUrl);
-							hData += "<tr>";
-							hData += "<td>"+galContentId+"</td>";
-							hData += "<td><a href='#'>"+galTitle+"</a></td>";
-							hData += "<td>"+galCreatedTime+"</td>";
-							hData += "<td>"+galPhotographyLocation+"</td>";
-							hData += "<td><img src='"+galWebImageUrl+"'></td>";
-							hData += "</tr>";
-						}//for
+							var movieNm = $(sData[i]).find("movieNm").text();
+							var openDt = $(sData[i]).find("openDt").text();
+							var genreAlt = $(sData[i]).find("genreAlt").text();
+							var peopleNm = $(sData[i]).find("peopleNm").text();
+							var companyNm = $(sData[i]).find("companyNm").text();
+							/*
+							console.log("1 : "+movieNm);
+							console.log("2 : "+openDt);
+							console.log("3 : "+genreAlt);
+							console.log("4 : "+peopleNm);
+							console.log("5 : "+companyNm);
+							*/
+							hData += "<tr>";	
+							hData += "<td>"+ i +"</td>";	
+							hData += "<td>"+ movieNm +"</td>";	
+							hData += "<td>"+ openDt+"</td>";	
+							hData += "<td>"+ genreAlt +"</td>";	
+							hData += "<td>"+ peopleNm +"</td>";	
+							hData += "<td>"+ companyNm +"</td>";	
+							hData += "</tr>";	
+						}
 						$("#cont").html(hData);
 					},
 					error:function(){
 						alert("데이터 실패");
+						
 					}
+					
 				});//ajax
 				
 			});//jquery
+			
 		</script>
-		<style>
-			#pageNo{width:120px;height:40px; margin-top:20px; float:right;}
-		</style>
+		
 	</head>
 	<body>
 		<nav id="top">
@@ -110,36 +110,32 @@
 					</div>
 				</div>
 			</div>
-			<div>
-				<select name="pageNo" id="pageNo">
-					<option value="10">10개씩</option>
-					<option value="20">20개씩</option>
-					<option value="30">30개씩</option>
-				</select>
-			</div>
 			<!-- 게시판 영역 -->
 			<div class="notice_conts">
 				<div class="tb_row">
 					<table>
 						<colgroup>
 							<col width="10%">
-							<col width="54%">
+							<col width="37%">
 							<col width="13%">
-							<col width="13%">
+							<col width="15%">
 							<col width="10%">
+							<col width="15%">
 						</colgroup>
 						<thead>
 							<tr>
 								<th>번호</th>
 								<th>제목</th>
-								<th>제작일</th>
-								<th>관광장소</th>
-								<th>이미지</th>
+								<th>개봉일</th>
+								<th>장르</th>
+								<th>감독</th>
+								<th>제작사</th>
 							</tr>
 						</thead>
 						<tbody id="cont">
 							
 						</tbody>
+						
 					</table>
 				</div>
 			</div>

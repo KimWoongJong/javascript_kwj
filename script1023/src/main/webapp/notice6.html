@@ -6,55 +6,50 @@
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/style.css">
 		<link rel="stylesheet" type="text/css" href="css/notice.css">
-		<style>
-			img{width:50px;}
-		</style>
 		<script>
 			$(function(){
-				var pageNo = $("#pageNo").val();
-				var s_url = "https://apis.data.go.kr/B551011/PhotoGalleryService1/galleryList1?serviceKey=iYgn7arEQ76VnhuI6Qa3VGdFJm%2B01s37aAimKTZGDmnyhUVXavHVoGylSfDCbi0leWxHpMKNYIHn5qSDCX7etw%3D%3D&numOfRows="+ pageNo +"&pageNo=1&MobileOS=ETC&MobileApp=AppTest&arrange=A&_type=xml";
+				var s_url="datafile/seoultrans.json";
 				$.ajax({
-					url:s_url, 			 //요청할 주소
-					type:"get",			 //전송방식 - get, post
-					data:"",			 //전달할 데이터
-					dataType:"xml", 	 //요청한 데이터타입 - xml,json,html,text
-					success:function(data){ //성공시
+					url:s_url,
+					type:"get",
+					data:"",
+					dataType:"json",
+					success:function(data){
 						alert("데이터 성공!!");
 						console.log(data);
-						var sData = $(data).find("item");				
-						console.log(sData);
-						var hData = "";
-						for(var i=0;i<sData.length;i++){
-							var galContentId = $(sData[i]).find("galContentId").text();
-							var galTitle = $(sData[i]).find("galTitle").text();
-							var galWebImageUrl = $(sData[i]).find("galWebImageUrl").text();
-							var galCreatedTime = $(sData[i]).find("galCreatedTime").text();
-							var galPhotographyLocation = $(sData[i]).find("galPhotographyLocation").text();
-							console.log("1 : "+galContentId);
-							console.log("2 : "+galTitle);
-							console.log("3 : "+galCreatedTime);
-							console.log("4 : "+galPhotographyLocation);
-							console.log("5 : "+galWebImageUrl);
-							hData += "<tr>";
-							hData += "<td>"+galContentId+"</td>";
-							hData += "<td><a href='#'>"+galTitle+"</a></td>";
-							hData += "<td>"+galCreatedTime+"</td>";
-							hData += "<td>"+galPhotographyLocation+"</td>";
-							hData += "<td><img src='"+galWebImageUrl+"'></td>";
-							hData += "</tr>";
-						}//for
-						$("#cont").html(hData);
+						//console.log(Object.values(JSON.parse(data)));
+						$.each(data, function(i,item){
+							var dhtml = "";
+							dhtml += "<tr>";	
+							dhtml += "<td>"+ item.sn +"</td>";
+							dhtml += "<td>"+ item.statn_nm +"</td>";	
+							dhtml += "<td>"+ item.wkday +"</td>";	
+							dhtml += "<td>"+ item.satday +"</td>";	
+							dhtml += "<td>"+ item.sunday +"</td>";	
+							dhtml += "</tr>";
+						});
+						/*
+						var dhtml = "";
+						for(var i=0;i<data.length;i++){
+							dhtml += "<tr>";	
+							dhtml += "<td>"+ data.sn[i] +"</td>";
+							dhtml += "<td>"+ data.statn_nm[i] +"</td>";	
+							dhtml += "<td>"+ data.wkday[i]+"</td>";	
+							dhtml += "<td>"+ data.satday[i] +"</td>";	
+							dhtml += "<td>"+ data.sunday[i] +"</td>";	
+							dhtml += "</tr>";
+						}
+						*/
+						$("#cont").html(dhtml);
 					},
 					error:function(){
 						alert("데이터 실패");
 					}
 				});//ajax
-				
 			});//jquery
+			
 		</script>
-		<style>
-			#pageNo{width:120px;height:40px; margin-top:20px; float:right;}
-		</style>
+		
 	</head>
 	<body>
 		<nav id="top">
@@ -110,36 +105,30 @@
 					</div>
 				</div>
 			</div>
-			<div>
-				<select name="pageNo" id="pageNo">
-					<option value="10">10개씩</option>
-					<option value="20">20개씩</option>
-					<option value="30">30개씩</option>
-				</select>
-			</div>
 			<!-- 게시판 영역 -->
 			<div class="notice_conts">
 				<div class="tb_row">
 					<table>
 						<colgroup>
-							<col width="10%">
-							<col width="54%">
-							<col width="13%">
-							<col width="13%">
-							<col width="10%">
+							<col width="12%">
+							<col width="28%">
+							<col width="20%">
+							<col width="20%">
+							<col width="20%">
 						</colgroup>
 						<thead>
 							<tr>
-								<th>번호</th>
-								<th>제목</th>
-								<th>제작일</th>
-								<th>관광장소</th>
-								<th>이미지</th>
+								<th>년도</th>
+								<th>역사명</th>
+								<th>평일</th>
+								<th>토요일</th>
+								<th>일요일</th>
 							</tr>
 						</thead>
 						<tbody id="cont">
 							
 						</tbody>
+						
 					</table>
 				</div>
 			</div>
